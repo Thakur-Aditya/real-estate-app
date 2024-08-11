@@ -10,6 +10,7 @@ import { AuthContext, AuthContextProvider } from "./context/AuthContext";
 import ProfileUpdatePage from "./routes/profileUpdatePage/profileUpdatePage";
 
 function App() {
+  const aditya = "aditya";
   const router = createBrowserRouter([
     {
       path: "/",
