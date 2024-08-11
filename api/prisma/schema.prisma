@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider = "mongodb"
-  url      = "mongodb+srv://adityasinghpost:aditya@estateapp.irvqhrp.mongodb.net/estate?retryWrites=true&w=majority&appName=EstateApp"
+  url      = env("DATABASE_URL")
 }
 
 
