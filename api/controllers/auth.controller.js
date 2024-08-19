@@ -58,7 +58,7 @@ export const login = async (req, res) => {
 
     //Getting user information
 
-    const {password: userPassword, ...userInfo} = user;
+    const { password: userPassword, ...userInfo } = user;
 
     res
       .cookie("token", token, {
@@ -67,7 +67,7 @@ export const login = async (req, res) => {
         // secure:true,
       })
       .status(200)
-      .json(user);
+      .json(userInfo);
   } catch (err) {
     res.status(500).json({ message: "Failed to Login", err: err });
   }
@@ -77,4 +77,8 @@ export const logout = (req, res) => {
     .clearCookie("token")
     .status(200)
     .json({ message: "User logged out successfully" });
+};
+
+export const verifyTokenRoute = (req, res) => {
+  res.status(200).json({ message: "Token is valid" });
 };

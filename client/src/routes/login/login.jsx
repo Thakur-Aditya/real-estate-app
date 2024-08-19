@@ -19,7 +19,11 @@ function Login() {
     // console.log(newUser);
     try {
       setIsLoading(true);
-      const res = await axios.post("/api/auth/login", newUser);
+      const res = await axios.post(
+        "http://localhost:8800/api/auth/login",
+        newUser,
+        { withCredentials: true }
+      );
       console.log(res.data);
 
       // localStorage.setItem("user",JSON.stringify(res.data));

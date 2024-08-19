@@ -10,9 +10,35 @@ function ProfilePage() {
   const navigate = useNavigate();
   const { currentUser, updateUser } = useContext(AuthContext);
 
+  // useEffect(() => {
+  //   // if (!currentUser) {
+  //   //   navigate("/login");
+  //   // }
+
+  //   async function verifyUser() {
+  //     try {
+  //       const response = await axios.post(
+  //         "http://localhost:8800/api/auth/verify-token",
+  //         {},
+  //         { withCredentials: true }
+  //       );
+  //       console.log(response);
+  //     } catch (error) {
+  //       console.log(error.response);
+  //       navigate("/login");
+  //     }
+  //   }
+
+  //   verifyUser();
+  // }, []);
+
   const handleLogour = async () => {
     try {
-      await axios.post("/api/auth/logout");
+      await axios.post(
+        "http://localhost:8800/api/auth/logout",
+        {},
+        { withCredentials: true }
+      );
       updateUser(null);
       navigate("/");
     } catch (error) {
