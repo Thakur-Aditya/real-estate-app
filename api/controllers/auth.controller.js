@@ -81,4 +81,5 @@ export const logout = (req, res) => {
 
 export const verifyTokenRoute = (req, res) => {
   res.status(200).json({ message: "Token is valid" });
+
 };

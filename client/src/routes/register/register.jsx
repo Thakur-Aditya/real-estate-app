@@ -1,7 +1,7 @@
 import "./register.scss";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useState } from "react";
+import apiRequest from "../../lib/apiRequest";
 
 
 function Register() {
@@ -19,9 +19,11 @@ function Register() {
     };
     console.log(newUser);
     try {
-      const res = await axios.post("api/auth/register", newUser);
+      // const res = await axios.post("api/auth/register", newUser);
+      await apiRequest.post("/auth/register", newUser);
+
       // .then((res) => {
-      console.log(res);
+      // console.log(res);
       navigate("/login");
     } catch (error) {
       setErr(error.response.data.message);

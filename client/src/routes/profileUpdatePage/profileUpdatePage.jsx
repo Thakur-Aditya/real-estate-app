@@ -1,13 +1,13 @@
 import { useContext, useState } from "react";
 import "./profileUpdatePage.scss";
 import { AuthContext } from "../../context/AuthContext";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import UploadWidget from "../../components/uploadWidget/UploadWidget.jsx";
+import apiRequest from "../../lib/apiRequest";
 
 function ProfileUpdatePage() {
   const { currentUser, updateUser } = useContext(AuthContext);
-  const [ avatar, setAvatar ] = useState("currentUser.avatar");
+  const [avatar, setAvatar] = useState([]);
 
   const handleAvatarChange = (newAvatar) => {
     setAvatar(newAvatar);
@@ -22,18 +22,19 @@ function ProfileUpdatePage() {
       username: username.value,
       email: email.value,
       password: password.value,
-      avatar: avatar,
+      avatar: avatar[0],
     };
     try {
-      const res = await axios.put(`/api/user/${currentUser.id}`, data);
+      const res = await apiRequest.put(`/user/${currentUser.id}`, data);
       // const {password:securePassword,...secureRes} = res.data;
       // console.log(secureRes);
       console.log(res.data);
       updateUser(res.data);
       navigate("/profile");
     } catch (error) {
+      console.log(error)
       setError(error);
-      res.status(400).json(error);
+      // res.status(400).json(error);
     }
   }
   return (
@@ -64,11 +65,11 @@ function ProfileUpdatePage() {
             <input id="password" name="password" type="password" />
           </div>
           <button>Update</button>
-          {error && <span>{error}</span>}
+          {error && <span>{error.response.data.message}</span>}
         </form>
       </div>
       <div className="sideContainer">
-        <img src={avatar || "/blank.webp"} alt="" className="avatar" />
+        <img src={avatar[0]|| currentUser.avatar || "/blank.webp"} alt="" className="avatar" />
         <UploadWidget
           uwConfig={{
             cloudName: "thakurAditya",
@@ -77,7 +78,7 @@ function ProfileUpdatePage() {
             maxImageFileSize: 20000000,
             folders: "avatars",
           }}
-          setAvatar={handleAvatarChange}
+          setState={handleAvatarChange}
         />
       </div>
     </div>

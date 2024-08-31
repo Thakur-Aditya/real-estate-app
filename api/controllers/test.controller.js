@@ -19,3 +19,9 @@ export const shouldBeAdmin = (req, res) => {
 
   res.status(200).json({ message: "You are authenticated" });
 };
+
+export const demo = (req, res) => {
+  console.log("I am logging out");
+  const tokenUserId = req.userId;
+  console.log(tokenUserId);
+}

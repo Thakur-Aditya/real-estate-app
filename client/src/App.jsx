@@ -7,7 +7,14 @@ import ProfilePage from "./routes/profilePage/profilePage";
 import Login from "./routes/login/login";
 import Register from "./routes/register/register";
 import { AuthContext, AuthContextProvider } from "./context/AuthContext";
+import { SocketContextProvider } from "./context/SocketContext.jsx";
 import ProfileUpdatePage from "./routes/profileUpdatePage/profileUpdatePage";
+import NewPostPage from "./routes/newPostPage/newPostPage";
+import {
+  listPageLoader,
+  profilePageLoader,
+  singlePageLoader,
+} from "./lib/loaders.js";
 
 function App() {
   const router = createBrowserRouter([
@@ -22,10 +29,12 @@ function App() {
         {
           path: "/list",
           element: <ListPage />,
+          loader: listPageLoader,
         },
         {
           path: "/:id",
           element: <SinglePage />,
+          loader: singlePageLoader,
         },
 
         {
@@ -45,10 +54,15 @@ function App() {
         {
           path: "/profile",
           element: <ProfilePage />,
+          loader: profilePageLoader,
         },
         {
           path: "/profile/update",
-          element: <ProfileUpdatePage/>,
+          element: <ProfileUpdatePage />,
+        },
+        {
+          path: "/add",
+          element: <NewPostPage />,
         },
       ],
     },
@@ -56,7 +70,9 @@ function App() {
 
   return (
     <AuthContextProvider>
-      <RouterProvider router={router} />
+      <SocketContextProvider>
+        <RouterProvider router={router} />
+      </SocketContextProvider>
     </AuthContextProvider>
   );
 }

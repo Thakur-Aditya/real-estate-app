@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 import "./login.scss";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
+import apiRequest from "../../lib/apiRequest";
 
 function Login() {
   const [err, setErr] = useState("");
@@ -19,11 +19,7 @@ function Login() {
     // console.log(newUser);
     try {
       setIsLoading(true);
-      const res = await axios.post(
-        "http://localhost:8800/api/auth/login",
-        newUser,
-        { withCredentials: true }
-      );
+      const res = await apiRequest.post("/auth/login", newUser);
       console.log(res.data);
 
       // localStorage.setItem("user",JSON.stringify(res.data));
