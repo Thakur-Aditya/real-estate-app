@@ -11,7 +11,9 @@ export const getUsers = async (req, res) => {
 };
 
 export const getUser = async (req, res) => {
+  console.log("I am runninggggggggg");
   const id = req.params.id;
+  console.log(id);
   try {
     const user = await prisma.user.findUnique({
       where: { id },
@@ -108,6 +110,7 @@ export const savePost = async (req, res) => {
 };
 
 export const profilePosts = async (req, res) => {
+  console.log("I am running");
   const tokenUserId = req.userId;
   console.log("====================================");
 
@@ -132,7 +135,6 @@ export const profilePosts = async (req, res) => {
     res.status(500).json({ message: `Failed to get Profile posts `, err: err });
   }
 };
-
 
 export const getNotificationNumber = async (req, res) => {
   const tokenUserId = req.userId;
