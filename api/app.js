@@ -20,6 +20,6 @@ app.use("/api/user", userRoute);
 app.use("/api/chats", chatRoute);
 app.use("/api/messages", messageRoute);
 
-app.listen(8800, () => {
+app.listen(process.env.PORT, () => {
   console.log("Example app listening on port 8800!");
 });
