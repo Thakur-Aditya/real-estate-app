@@ -31,11 +31,6 @@ function App() {
           element: <ListPage />,
           loader: listPageLoader,
         },
-        {
-          path: "/:id",
-          element: <SinglePage />,
-          loader: singlePageLoader,
-        },
 
         {
           path: "/login",
@@ -44,6 +39,11 @@ function App() {
         {
           path: "/register",
           element: <Register />,
+        },
+        {
+          path: "/:id",
+          element: <SinglePage />,
+          loader: singlePageLoader,
         },
       ],
     },
