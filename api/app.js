@@ -11,7 +11,13 @@ import cookieParser from "cookie-parser";
 const app = express();
 app.use(express.json());
 // app.use(cors({ origin: "http://localhost:5173/api", credentials: true })); //Credentials for sending cookies
-app.use(cors({ origin: "https://real-estate-app-beta-six.vercel.app/", credentials: true })); //Credentials for sending cookies
+app.use(
+  cors({
+    origin: "*", // Allows all origins
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+); //Credentials for sending cookies
 app.use(cookieParser());
 
 app.use("/api/posts", postRoute);
