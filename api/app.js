@@ -13,7 +13,7 @@ app.use(express.json());
 // app.use(cors({ origin: "http://localhost:5173/api", credentials: true })); //Credentials for sending cookies
 app.use(
   cors({
-    origin: "*", // Allows all origins
+    origin: "https://real-estate-app-beta-six.vercel.app", // Allows all origins
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
