@@ -2,7 +2,7 @@ import { Server } from "socket.io";
 
 const io = new Server({
   cors: {
-    origin: "http://localhost:5173",
+    origin: "https://real-estate-app-beta-six.vercel.app",
   },
 });
 
@@ -43,4 +43,4 @@ io.on("connection", (socket) => {
   });
 });
 
-io.listen(4000);
+io.listen(process.env.PORT);
