@@ -1,8 +1,11 @@
 import { Server } from "socket.io";
-
+const env = "production";
 const io = new Server({
   cors: {
-    origin: "https://real-estate-app-beta-six.vercel.app",
+    origin:
+      env === "dev"
+        ? "http://localhost:5173"
+        : "https://real-estate-app-beta-six.vercel.app",
   },
 });
 

@@ -7,12 +7,65 @@ import DOMPurify from "dompurify";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import apiRequest from "../../lib/apiRequest.js";
+import { SocketContext } from "../../context/SocketContext.jsx";
 
 function SinglePage() {
   const post = useLoaderData();
+  const [message, setMessage] = useState("");
   const [saved, setSaved] = useState(post.isSaved);
+  const [openBox, setOpenBox] = useState(false);
   const { currentUser } = useContext(AuthContext);
+  const data = useLoaderData();
+
   const navigate = useNavigate();
+  const [chat, setChat] = useState(null);
+  const [chatId, setChatId] = useState();
+  const { socket } = useContext(SocketContext);
+
+  function handleChatBox() {
+    if (currentUser.id == post.userId)
+      return alert("You can not chat with yourself");
+    try {
+      apiRequest.post("/chats/", { receiverId: post.userId }).then((res) => {
+        console.log("chat created successfully" + res.data.id);
+        setChatId(res.data.id);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    setOpenBox(!openBox);
+    console.log(currentUser.id);
+    console.log(post.userId);
+  }
+  async function sendMessage(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const text = formData.get("text");
+    if (!text) return;
+
+    try {
+      const res = await apiRequest.post("/messages/" + chatId, { text });
+      // setChat((prev) => ({ ...prev, messages: [...prev.messages, res.data] }));
+      e.target.reset();
+
+      socket.emit("sendMessage", {
+        receiverId: post.userId,
+        data: res.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  // const sendMessage = () => {
+  //   if (message.trim()) {
+  //     console.log("Message Sent:", message);
+  //     alert(`Message Sent: ${message}`); // Replace with actual message sending logic
+  //     setMessage(""); // Clear the input field after sending
+  //   } else {
+  //     alert("Message cannot be empty!");
+  //   }
+  // };
 
   async function handleSave() {
     setSaved((prev) => !prev);
@@ -133,8 +186,16 @@ function SinglePage() {
           <div className="mapContainer">
             <Map items={[post]} />
           </div>
+          {openBox && (
+            <div className="">
+              <form onSubmit={sendMessage} className="">
+                <textarea name="text"></textarea>
+                <button>Send</button>
+              </form>
+            </div>
+          )}
           <div className="buttons">
-            <button>
+            <button onClick={handleChatBox}>
               <img src="/chat.png" alt="" />
               Send a Message
             </button>

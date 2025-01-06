@@ -7,9 +7,15 @@ export const SocketContext = createContext();
 export const SocketContextProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
   const { currentUser } = useContext(AuthContext);
-
+  const env = "production";
   useEffect(() => {
-    setSocket(io("https://real-estate-app-2-socket.onrender.com"));
+    setSocket(
+      io(
+        env === "dev"
+          ? "http://localhost:4000/"
+          : "https://real-estate-app-2-socket.onrender.com"
+      )
+    );
   }, []);
 
   useEffect(() => {

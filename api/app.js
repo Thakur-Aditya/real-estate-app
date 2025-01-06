@@ -7,13 +7,16 @@ import chatRoute from "./routes/chat.route.js";
 import messageRoute from "./routes/message.route.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-
+const env = "production";
 const app = express();
 app.use(express.json());
-// app.use(cors({ origin: "http://localhost:5173/api", credentials: true })); //Credentials for sending cookies
+// app.use(cors({ origin: "http://localhost:5173/api", credentials: true })); //Credentials for sending cookies "https://real-estate-app-beta-six.vercel.app"
 app.use(
   cors({
-    origin: "https://real-estate-app-beta-six.vercel.app", // Allows all origins
+    origin:
+      env === "dev"
+        ? "http://localhost:5173"
+        : "https://real-estate-app-beta-six.vercel.app",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
